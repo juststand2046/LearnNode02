@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TEST</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+<body>
+    <h1>测试页面</h1>
+    <button onclick="login()">登录</button>
+    <hr>
+    <form action="">
+        <!--multiple 支持多文件上传-->
+        <input id="file" type="file" name="file" multiple/>
+        <input type="button" value="上传" onclick="uploadImg()"/>
+        <input type="button" value="上传多文件" onclick="uploadImages()"/>
+    </form>
+    <hr>
+    <input type="button" value="下载" onclick="download('3.jpg')">
+<script>
+    function login() {
+        $.ajax({
+            url:'http://localhost:3000/user/login',
+            type:'post',
+            data:{
+                uaccount:'admin',
+                pwd:'123'
+            },
+            success:function (data) {
+                console.log(data);
+            }
+        });
+    }
+    function uploadImg() {
+        let file=$('#file')[0].files[0];
+        let formdata=new FormData();
+        formdata.append('img',file);
+        $.ajax({
+            url:'http://localhost:3000/file/upload',
+            type:'post',
+            cache:false,
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success:function (data) {
+                console.log(data);
+            }
+        });
+    }
+    function uploadImages() {
+        let file=$('#file')[0].files;
+        console.log(file);
+        let formdata=new FormData();
+        $.each(file,function (index,item) {
+            formdata.append('img',item);
+        });
+        $.ajax({
+            url:'http://localhost:3000/file/uploads',
+            type:'post',
+            cache:false,
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success:function (data) {
+                console.log(data);
+            }
+        });
+    }
+    function download(fileName) {
+        $.ajax({
+            url:'http://localhost:3000/file/download',
+            type:'get',
+            data:{
+                fileName:fileName
+            },
+            success:function (data) {
+                console.log(data);
+                window.open('http://localhost:3000/file/download?fileName='+fileName,'_self');
+            }
+        });
+    }
+</script>
+</body>
+</html>

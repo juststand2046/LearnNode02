@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editor</title>
+    <link rel="stylesheet" href="../../node_modules/editor.md/css/editormd.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../../node_modules/editor.md/editormd.min.js"></script>
+</head>
+<body>
+
+
+<div id="editor">
+    <textarea style="display:none;">### 关于 Editor.md
+
+**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
+    </textarea>
+</div>
+<div style="text-align: center">
+    <input id="addEdition" type="button" value="确认提交">
+</div>
+<script type="text/javascript">
+    $(function () {
+        var editor = editormd("editor", {
+            width: "80vw",
+            height: "80vh",
+            path: "../../node_modules/editor.md/lib/"
+        });
+
+        $('#addEdition').click(function () {
+            $('#editor')
+        })
+    })
+
+
+</script>
+</body>
+</html>

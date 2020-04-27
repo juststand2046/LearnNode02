@@ -1,0 +1,4 @@
+function foo1<T>(x:T):void{
+    console.log(x);
+}
+foo1<number>(1);

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>class</title>
+</head>
+<body>
+<h1>ES6-class</h1>
+<script>
+    class Person{
+        constructor(name) {
+            this.name=name;
+        }
+        myname(){
+            console.log(this);
+            return this;
+        }
+    }
+    let person=new Person('xiaoming');
+    person.myname();
+
+    class Student extends Person{
+        constructor(name,age) {
+            super(name);
+            this.age=age;
+        }
+        myage(){
+            console.log(this);
+            return this;
+        }
+    }
+    let student=new Student('laowang','18');
+    student.myage();
+</script>
+</body>
+</html>
