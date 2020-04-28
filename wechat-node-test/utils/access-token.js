@@ -36,7 +36,7 @@ class WeChat {
         accessToken = JSON.stringify(accessToken);
         //将access_token保存文件
         return new Promise((resolve, reject) => {
-            writeFile('./accessToken.txt', accessToken, err => {
+            writeFile('./AccessToken.txt', accessToken, err => {
                 if (!err) {
                     console.log("文件保存成功");
                     resolve()
@@ -52,7 +52,7 @@ class WeChat {
     //读取access_token文件
     readAccessToken() {
         return new Promise((resolve, reject) => {
-            readFile('./accessToken.txt', (err, data) => {
+            readFile('./AccessToken.txt', (err, data) => {
                 if (!err) {
                     //将json字符串转换成js对象
                     data = JSON.parse(data);
@@ -84,14 +84,14 @@ class WeChat {
             this.readAccessToken()
                 //读取成功
                 .then((res) => {
-                    console.log('读取成功')
+                    console.log('读取成功');
                     //判断是否过期
                     if (this.isValidAccessToken(res)) {
-                        console.log('没过期')
+                        console.log('没过期');
                         //没过期，直接用
                         resolve(res);
                     } else {
-                        console.log('过期了')
+                        console.log('过期了');
                         //过期，重新获取
                         this.getAccessToken()
                             //获取成功
@@ -116,7 +116,7 @@ class WeChat {
                 })
                 //读取失败
                 .catch((err) => {
-                    console.log('读取失败')
+                    console.log('读取失败');
                     //重新获取
                     this.getAccessToken()
                         //获取成功

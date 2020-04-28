@@ -9,7 +9,7 @@ const bodyParser=require('body-parser');
 const cors=require('cors');
 
 //路由
-const wechatRouter=require('./router/wechatRouter');
+const wechatRouter=require('./router/wechat-router');
 
 //解析 x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -22,6 +22,12 @@ let port = 3000;
 
 //设置允许跨域请求
 app.use(cors());
+
+//1. 配置模板资源目录
+app.set('views', path.join(__dirname,'views'));
+//2. 配置要使用的模板引擎
+app.set('views engine', 'ejs');
+
 
 //配置静态资源目录
 app.use('/public',express.static(path.join(__dirname,'./public')));
