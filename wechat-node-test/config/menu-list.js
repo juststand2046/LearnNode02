@@ -21,9 +21,9 @@ module.exports={
             "key": "rselfmenu_2_0"
         },
         {
-            "type":"click",
-            "name":"赞一下我们",
-            "key":"good_for_we"
-        }
+            "type":"view",
+            "name":"INDEX",
+            "url":"http://30m1853v49.wicp.vip/wx/index"
+        },
     ]
 };

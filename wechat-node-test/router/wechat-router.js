@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const rp=require('request-promise-native');
+
 const config = require('../config/index');
 const sha1 = require('sha1');
 const WeChat = require('../utils/access-token');
 const WeChatMenu=require('../utils/menu');
+const WeChatJsSDK=require('../utils/jssdk-ticket');
 const {getUserDataAsync, formatXmlData, parserXMLDataAsync} = require('../utils/tool');
 const reply=require('../utils/reply');
 const menuList=require('../config/menu-list');
@@ -80,7 +83,6 @@ router.get('/get-token', (req, res) => {
         })
 
 });
-
 //创建菜单
 router.get('/creat-menu',async (req,res)=>{
     try {
@@ -106,8 +108,16 @@ router.get('/del-menu',async (req,res)=>{
     }
 });
 
-router.get('/index',(req,res)=>{
-    res.render('index.ejs');
+router.get('/index',async (req,res)=>{
+    let url='http://30m1853v49.wicp.vip/wx/index';
+
+    let weChatJsSDK = new WeChatJsSDK();
+    let result= await weChatJsSDK.getWxJsSDKSignature(url);
+
+    console.log('-----------');
+    console.log('result:',result);
+
+    res.render('index.ejs',result);
 });
 
 module.exports = router;
