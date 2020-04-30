@@ -10,6 +10,8 @@
 <body>
 <h1>ejs test</h1>
 <button id="photo">拍照或从相册选择</button>
+<button id="spk">开始或结束语音</button>
+<button id="position">地理位置信息</button>
 
 <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script>
@@ -22,7 +24,7 @@
         timestamp: '<%= timestamp %>', // 必填，生成签名的时间戳
         nonceStr: '<%= noncestr %>', // 必填，生成签名的随机串
         signature: '<%= signature %>',// 必填，签名
-        jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表
+        jsApiList: ['chooseImage','startRecord','stopRecord','getLocation'] // 必填，需要使用的JS接口列表
     });
     wx.ready(function () {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
@@ -40,7 +42,6 @@
       trigger: 监听Menu中的按钮点击时触发的方法，该方法仅支持Menu中的相关接口。
     */
 
-
     let photo = document.getElementById('photo');
     photo.addEventListener('click', (ev) => {
         wx.chooseImage({
@@ -49,6 +50,40 @@
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                console.log('localIds:', localIds)
+            }
+        });
+    })
+
+    let spk = document.getElementById('spk');
+    let spkFlag=false;
+    spk.addEventListener('click', (ev) => {
+        if(!spkFlag){
+            wx.startRecord();
+            console.log('开始录音')
+            spkFlag=true;
+        }else {
+            wx.stopRecord({
+                success: function (res) {
+                    var localId = res.localId;
+                    console.log('localId:',localId)
+                }
+            });
+            console.log('结束录音')
+            spkFlag=false;
+        }
+    })
+
+    let position=document.getElementById('position');
+    position.addEventListener('click', (ev) => {
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+                console.log('res:', res);
             }
         });
     })

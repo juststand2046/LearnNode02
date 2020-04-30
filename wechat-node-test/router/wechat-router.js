@@ -10,6 +10,7 @@ const WeChatJsSDK=require('../utils/jssdk-ticket');
 const {getUserDataAsync, formatXmlData, parserXMLDataAsync} = require('../utils/tool');
 const reply=require('../utils/reply');
 const menuList=require('../config/menu-list');
+const {viewUrl}=require('../config/index');
 
 /*
 { signature: '0d1962496fe92e76bd49143d95320377aa15dfd2',
@@ -109,7 +110,7 @@ router.get('/del-menu',async (req,res)=>{
 });
 
 router.get('/index',async (req,res)=>{
-    let url='http://30m1853v49.wicp.vip/wx/index';
+    let url=`${viewUrl}/wx/index`;
 
     let weChatJsSDK = new WeChatJsSDK();
     let result= await weChatJsSDK.getWxJsSDKSignature(url);
